@@ -120,6 +120,15 @@ for index, message in enumerate(st.session_state.messages):
             st.markdown(message["content"])
 
     chat.history.append(content)
+    
+# This is the code you need to add after the chat history initialization
+# Get user input
+user_input = st.text_input("Enter your query here")
+
+# Check if user input is not empty
+if user_input:
+    # Call helper function to send and display messages
+    llm_function(chat, user_input)   
 
 # For Initial message startup
 if len(st.session_state.messages) == 0:

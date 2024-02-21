@@ -244,6 +244,62 @@ def handle_flight_book(flight_id: int, seat_type: str, num_seats: int = 1, db: S
     # Return a success message
     return {"message": success_message, "flight_info": flight}
 
+
+def book_flight(flight_id: int, seat_type: str, num_seats: int = 1, db: Session = Depends(get_db)):
+    """
+    Books a specified number of seats on a flight.
+
+    This function books seats on a flight identified by its flight_id. It handles seat 
+    booking for different classes (economy, business, first class) and calculates the total cost based 
+    on the number of seats and the seat type. It updates the flight's seat availability and commits the 
+    changes to the database.
+
+    Parameters:
+    - flight_id (int): The unique identifier of the flight to book.
+    - seat_type (str): The class of the seat to book (economy, business, or first_class).
+    - num_seats (int, optional): The number of seats to book (default is 1).
+    - db (Session, default Depends(get_db)): SQLAlchemy database session for executing queries.
+
+    Returns:
+    - On successful booking: A dictionary containing a success message and flight information.
+    - On failure (flight not found or not enough seats): A failure message as a string.
+
+    The function checks seat availability before booking. If the requested number of seats is 
+    not available in the specified class, it returns an error message. If the flight is not found, 
+    it returns a 'Flight not found.' message.
+    """
+    # Retrieve the flight from the database
+    flight = db.query(Flight).filter(Flight.flight_id == flight_id).first()
+
+    if not flight:
+        return "Flight not found."
+
+    # Initialize the cost variable
+    total_cost = 0
+
+    # Check seat availability based on seat type and number of requested seats
+    if seat_type == "economy" and flight.open_seats_economy >= num_seats:
+        flight.open_seats_economy -= num_seats
+        total_cost = flight.economy_seat_cost * num_seats
+    elif seat_type == "business" and flight.open_seats_business >= num_seats:
+        flight.open_seats_business -= num_seats
+        total_cost = flight.business_seat_cost * num_seats
+    elif seat_type == "first_class" and flight.open_seats_first_class >= num_seats:
+        flight.open_seats_first_class -= num_seats
+        total_cost = flight.first_class_cost * num_seats
+    else:
+        # If not enough seats are available, return a failure message
+        return f"Not enough {seat_type} seats available."
+
+    # Commit the booking to the database
+    db.commit()
+    
+    success_message = f"Successfully booked {num_seats} {seat_type} seat(s) on {flight.airline} flight on {flight.departure_date} from {flight.origin} to {flight.destination}. Total cost: ${total_cost}."
+
+    # Return a success message
+    return {"message": success_message, "flight_info": flight}
+
+
 def search_flights(**params):
     """
     Sends a GET request to a FastAPI endpoint to search for flights based on various criteria.
