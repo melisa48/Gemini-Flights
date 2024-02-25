@@ -69,6 +69,8 @@ class FlightSearchCriteria(BaseModel):
     seat_type: Optional[str] = None  # 'economy', 'business', 'first_class'
     min_cost: Optional[int] = None
     max_cost: Optional[int] = None
+    direct_flights_only: Optional[bool] = None
+    max_layover_duration: Optional[int] = None
     
 
 # Create the database

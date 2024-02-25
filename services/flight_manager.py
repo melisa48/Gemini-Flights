@@ -300,6 +300,7 @@ def book_flight(flight_id: int, seat_type: str, num_seats: int = 1, db: Session 
     return {"message": success_message, "flight_info": flight}
 
 
+
 def search_flights(**params):
     """
     Sends a GET request to a FastAPI endpoint to search for flights based on various criteria.

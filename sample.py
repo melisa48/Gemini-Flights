@@ -4,7 +4,7 @@ from vertexai.preview import generative_models
 from vertexai.preview.generative_models import GenerativeModel, Tool, Part, Content, ChatSession
 from services.flight_manager import search_flights
 
-project = "sample-gemini"
+project = "gemini-flights-414220"
 vertexai.init(project = project)
 
 # Define Tool
@@ -27,11 +27,68 @@ get_search_flights = generative_models.FunctionDeclaration(
                 "format": "date",
                 "description": "The date of departure for the flight in YYYY-MM-DD format"
             },
+            "return_date": {
+                "type": "string",
+                "format": "date",
+                "description": "The date of return for the flight in YYYY-MM-DD format"
+            },
+            "passenger_count": {
+                "type": "integer",
+                "description": "The number of passengers"
+            },
+            "flight_number": {
+                "type": "string",
+                "description": "The flight number (optional)"
+            },
+            "airline": {
+                "type": "string",
+                "description": "The airline (optional)"
+            },
+            "departure_time": {
+                "type": "string",
+                "format": "time",
+                "description": "The departure time (optional)"
+            },
+            "arrival_time": {
+                "type": "string",
+                "format": "time",
+                "description": "The arrival time (optional)"
+            },
+            "seat_type": {
+                "type": "string",
+                "description": "The seat type (optional)"
+            },
+            "min_cost": {
+                "type": "integer",
+                "description": "The minimum cost (optional)"
+            },
+            "max_cost": {
+                "type": "integer",
+                "description": "The maximum cost (optional)"
+            },
+             "direct_flights_only": {
+                "type": "boolean",
+                "description": "Whether to include only direct flights (optional)"
+            },
+            "max_layover_duration": {
+                "type": "integer",
+                "description": "The maximum layover duration in minutes (optional)"
+            }
         },
         "required": [
             "origin",
             "destination",
-            "departure_date"
+            "departure_date",
+            "passenger_count",
+            "flight_number",
+            "airline",
+            "departure_time",
+            "arrival_time",
+            "seat_type",
+            "min_cost",
+            "max_cost",
+            "direct_flights_only",
+            "max_layover_duration"
         ]
     },
 )
@@ -121,14 +178,6 @@ for index, message in enumerate(st.session_state.messages):
 
     chat.history.append(content)
     
-# This is the code you need to add after the chat history initialization
-# Get user input
-user_input = st.text_input("Enter your query here")
-
-# Check if user input is not empty
-if user_input:
-    # Call helper function to send and display messages
-    llm_function(chat, user_input)   
 
 # For Initial message startup
 if len(st.session_state.messages) == 0:
