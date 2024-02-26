@@ -1,19 +1,19 @@
 # Gemini Flight Manager
 
 ## Overview
+Gemini Flight Manager is a comprehensive backend system built using FastAPI and designed to manage and simulate flight-related operations. This system provides a robust platform for handling various aspects of flight management, including flight generation, search, and booking functionalities.
 
-Gemini Flight Manager is a comprehensive backend system built using FastAPI, designed for managing and simulating flight-related operations. This system provides a robust platform for handling various aspects of flight management, including flight generation, search, and booking functionalities.
-
-The project leverages FastAPI's efficient and easy-to-use framework to create a high-performance, scalable solution ideal for flight data management. It comes equipped with an SQLite database (`flights.db`) pre-populated with initial data, allowing for quick deployment and testing.
+The project leverages FastAPI's efficient and easy-to-use framework to create a high-performance, scalable solution ideal for flight data management. It has an SQLite database (flights.db) pre-populated with initial data, allowing quick deployment and testing.
 
 Key features of Gemini Flight Manager include:
-- Advanced search capabilities to query flights based on criteria like origin, destination, and dates.
-- Booking system that handles seat availability across different classes and calculates costs accordingly.
 
+Advanced search capabilities to query flights based on criteria like origin, destination, and dates.
+Booking system that handles seat availability across different classes and calculates costs accordingly.
 Designed with extensibility and scalability in mind, Gemini Flight Manager is well-suited for both educational purposes and as a foundation for more complex flight management applications.
+For the purposes of Gemini Function Calling, you will only need search_flights and book_flight functions.
 
-**For the purposes of Gemini Function Calling, you will only need `search_flights` and `book_flight` functions.
-
+Documentation on Overall Progress:
+This project has been completed within approximately one to two weeks.
 ## Installation
 
 ### Prerequisites
