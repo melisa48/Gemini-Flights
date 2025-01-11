@@ -1,4 +1,4 @@
-# Gemini Flight-Radical AI Internship Project
+# Gemini Flight
 
 ## Overview
 Gemini Flight is a comprehensive backend system built using FastAPI and designed to manage and simulate flight-related operations. This system provides a robust platform for handling various aspects of flight management, including flight generation, search, and booking functionalities.
